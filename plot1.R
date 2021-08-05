@@ -15,7 +15,8 @@ hh_power <- read.table(unz(temp, "household_power_consumption.txt"),
 unlink(temp)
 
 #restrict to only 2007-02-01 and 2007-02-02
-hh_power$datetime <- combine.date.and.time(hh_power$Date, hh_power$Time)
+hh_power$datetime <- combine.date.and.time(as.Date(hh_power$Date, "%d/%m/%Y"), 
+                                           hh_power$Time)
 
 hh_power_feb <- hh_power[hh_power$datetime >= as.Date("2007-02-01")
                          & hh_power$datetime < as.Date("2007-02-03"),]
@@ -32,70 +33,6 @@ png("plot1.png", width = 480, height = 480)
 #make plot #1
 hist(hh_power_feb$Global_active_power, col = "red", 
      main = "Global Active Power", xlab = "Global Active Power (kilowatts)")
-
-#close file location
-dev.off()
-
-
-
-
-
-
-#open png file location
-png("plot1.png", width = 480, height = 480)
-
-#make plot #2
-plot(hh_power_feb$datetime, hh_power_feb$Global_active_power, type = 'l', 
-     xlab = "", ylab = "Global Active Power (kilowatts)")
-
-#close file location
-dev.off()
-
-
-
-
-
-#open png file location
-png("plot1.png", width = 480, height = 480)
-
-#make plot #3 
-plot(hh_power_feb$datetime, hh_power_feb$Sub_metering_1, col = "black", 
-     type = 'l', xlab = '', ylab = "Energy sub metering") 
-lines(hh_power_feb$datetime, hh_power_feb$Sub_metering_2, col = "red")
-lines(hh_power_feb$datetime, hh_power_feb$Sub_metering_3, col = "blue")
-legend("topright", legend = c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), 
-       col = c("black","red","blue"), lty = 1)
-
-#close file location
-dev.off()
-
-
-
-
-#open png file location
-png("plot1.png", width = 480, height = 480)
-
-#make plot #4 
-par(mfrow = c(2,2))
-
-#make plot #1
-plot(hh_power_feb$datetime, hh_power_feb$Global_active_power, type = 'l', 
-     xlab = "", ylab = "Global Active Power")
-
-#make plot #2
-plot(hh_power_feb$datetime, hh_power_feb$Voltage, type = 'l', xlab = "datetime",
-     ylab = "Voltage")
-
-#make plot #3 
-plot(hh_power_feb$datetime, hh_power_feb$Sub_metering_1, col = "black", 
-     type = 'l', xlab = '', ylab = "Energy sub metering") 
-lines(hh_power_feb$datetime, hh_power_feb$Sub_metering_2, col = "red")
-lines(hh_power_feb$datetime, hh_power_feb$Sub_metering_3, col = "blue")
-legend("topright", legend = c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), 
-       col = c("black","red","blue"), lty = 1)
-
-plot(hh_power_feb$datetime, hh_power_feb$Global_reactive_power, type = 'l', 
-     xlab = "datetime", ylab = "Global_reactive_power")
 
 #close file location
 dev.off()
